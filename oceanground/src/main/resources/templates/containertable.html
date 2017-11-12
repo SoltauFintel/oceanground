@@ -1,0 +1,38 @@
+#parse("/templates/master.html")
+#@master()
+
+<div class="row"><div class="col-lg-12">
+
+	<h1 class="page-header">Containerdefinitionen</h1>
+	
+	<table class="table table-striped" style="margin-top: 2em;">
+		<tr>
+			<th style="width: 200px;"><a href="/containertable" style="color: black; text-decoration: underline;">Container</a></th>
+			<th style="text-align: right; width: 100px;"><a href="/containertable?sort=port"
+					style="color: black; text-decoration: underline;">Host<br/>port</a></th>
+			<th style="text-align: right; width: 100px;">Container<br/>port</th>
+			<th>Image</th>
+			#if ($compact eq false)
+			<th>Env</th>
+			<th>Path mappings</th>
+			#end
+		</tr>
+	#foreach($c in $containers)
+		<tr>
+			<td><a href="/manage/container/${c.container}">$c.container</a></td>
+			<td align="right">${c.portHost}</td>
+			<td align="right">${c.portContainer}</td>
+			<td>${c.image}</td>
+			#if ($compact eq false)
+			<td>${c.envHtml}</td>
+			<td>${c.pathMappingsHtml}</td>
+			#end
+		</tr>
+	#end
+	</table>
+	
+	<p style="margin-top: 3em;"></p>
+	
+</div></div>
+
+#end

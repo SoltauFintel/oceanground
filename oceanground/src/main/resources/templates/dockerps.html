@@ -1,0 +1,21 @@
+#parse("/templates/master.html")
+#@master()
+
+<div class="row">
+
+<h1 class="page-header">Liste der laufenden Docker Container</h1>
+
+#foreach($c in $list)
+<div class="col-lg-3" style="background-color: #${c.backcolor}; margin-right: 1em; margin-bottom: 1em;">
+	<p>
+		<a href="/container/${c.name}" style="font-weight: bold; font-size: 130%;">${c.name}</a>
+		<br/>$c.status
+		<br/>Port: $c.ports
+		<br/>Image: $c.image
+	</p>
+</div>
+#end
+
+</div>
+
+#end

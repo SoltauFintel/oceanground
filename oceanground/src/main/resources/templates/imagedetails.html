@@ -1,0 +1,127 @@
+#parse("/templates/master.html")
+#@master()
+
+<!--
+
+TODO
+- alle tags anzeigen
+
+-->
+ 
+ 
+<div class="row"><div class="col-lg-12">
+
+<h1 class="page-header">Image "${i.shortName}"</h1>
+
+<h3>Image</h3>
+<table class="table">
+	<tr>
+		<td width="25%">Image Id</td>
+		<td>$i.longId</td>
+	</tr>
+	<tr>
+		<td>Name</td>
+		<td><b>$i.shortName</b></td>
+	</tr>
+	<tr>
+		<td>Version</td>
+		<td>$i.version</td>
+	</tr>
+	<tr>
+		<td>Registry</td>
+		<td>$i.server</td>
+	</tr>
+	<tr>
+		<td>kompletter Name</td>
+		<td>$i.name</td>
+	</tr>
+	#if ($i.cmd != "")
+	<tr>
+		<td>CMD</td>
+		<td style="font-family: Monospace;">$i.cmd</td>
+	</tr>
+	#end
+	#if ($i.entryPoint != "")
+	<tr>
+		<td>EntryPoint</td>
+		#if ($i.image)
+		<td style="font-family: Monospace;">$i.entryPoint</td>
+		#else
+		<td style="font-family: Monospace;">$i.entryPoint</td>
+		#end
+	</tr>
+	#end
+	<tr>
+		<td>Autor</td>
+		<td>$i.author</td>
+	</tr>
+	<tr>
+		<td>Erstellt</td>
+		<td>$i.created</td>
+	</tr>
+	<tr>
+		<td>Gr&ouml;&szlig;e</td>
+		<td>$!i.size</td>
+	</tr>
+</table>
+
+#if ($similarWithNames)
+<h3>&Auml;hnliche Images mit Namen ($nSimilarWithNames)</h3>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Image Id</th>
+			<th>Erstellt am</th>
+			<th>Gr&ouml;&szlig;e</th>
+			<th>Autor</th>
+			<th width="25%">Befehl</th>
+			<th width="25%">Name</th>
+		</tr>
+	</thead>
+	<tbody>
+	#foreach($c in $similarWithNames)
+		<tr>
+			<td>$c.id</td>
+			<td>$c.created</td>
+			<td align="right">$c.size</td>
+			<td>$c.author</td>
+			<td>$c.command</td>
+			<td>$c.name</td>
+		</tr>
+	#end
+	</tbody>
+</table>
+#end
+
+#if ($similar)
+<h3>&Auml;hnliche Images ($nSimilar)</h3>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Image Id</th>
+			<th>Erstellt am</th>
+			<th>Gr&ouml;&szlig;e</th>
+			<th>Autor</th>
+			<th width="50%">Befehl</th>
+		</tr>
+	</thead>
+	<tbody>
+	#foreach($c in $similar)
+		<tr>
+			<td>$c.id</td>
+			<td>$c.created</td>
+			<td align="right">$c.size</td>
+			<td>$c.author</td>
+			<td>$c.command</td>
+		</tr>
+	#end
+	</tbody>
+</table>
+<p><a href="/image/$i.longId/delete-similar" class="btn btn-danger">$deleteSimilarBtnText</a></p>
+#end
+
+<p><a href="/images">&lt;&lt; zur&uuml;ck zur Imageliste</a></p>
+
+</div></div>
+
+#end

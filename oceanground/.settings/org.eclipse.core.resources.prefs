@@ -1,0 +1,5 @@
+eclipse.preferences.version=1
+encoding//src/main/resources/templates/containerdetails.html=UTF-8
+encoding//src/main/resources/templates/dockerps.html=UTF-8
+encoding//src/main/resources/templates/index.html=UTF-8
+encoding//src/main/resources/templates/master.html=UTF-8

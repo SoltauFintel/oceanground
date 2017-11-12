@@ -1,0 +1,16 @@
+#parse("/templates/master.html")
+#@master()
+
+<div class="row">
+	<h1 class="page-header">Container l&ouml;schen</h1>
+	<div class="col-lg-12">
+
+		<p style="margin-top: 1em;"><a href="/manage/container/$container/delete" class="btn btn-danger">Container
+			"$container" l&ouml;schen!</a></p>
+		<p style="margin-top: 2em;">Diese Aktion l&ouml;scht nur den Containereintrag in der Datenbank. Ein etwaiger gleichnamiger
+			laufender Docker Container wird nicht ver&auml;ndert.</p> 
+
+	</div>
+</div>
+
+#end

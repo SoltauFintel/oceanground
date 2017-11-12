@@ -1,0 +1,91 @@
+#macro(master)
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	#if ($title)
+	<title>$title</title>
+	#else
+	<title>OceanGround</title>
+	#end
+	
+    <!-- Bootstrap Core & Social CSS -->
+    <link href="/bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/bootstrap/bootstrap-social.css" rel="stylesheet" type="text/css">
+
+    <!-- MetisMenu CSS -->
+    <link href="/metisMenu/metisMenu.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom CSS -->
+    <link href="/sbadmin2/sb-admin-2.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom Fonts -->
+    <link href="/fontawesome/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+	<style>
+		* { font-family: 'Verdana'; }
+		.header { font-size: 300%; font-family: 'Shadows Into Light'; font-weight: bold; font-style: italic; margin-bottom: 0; margin-top: 0; }
+		.user { font-size: 70%; }
+		.username { font-weight: bold; }
+		pre.mono { font-family: Monospace; }
+		pre.mono a { font-family: Monospace; text-decoration: none; }
+		pre.mono a:visited { font-family: Monospace; text-decoration: none; }
+		pre.mono a:hover { font-family: Monospace; text-decoration: none; }
+		pre.log { font-size: 80%; min-height: 10em; max-height: 40em; }
+		pre.errorlog { color: #c00; }
+	</style>
+</head>
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">OceanGround Docker Tool</a>
+            </div>
+            <!-- /.navbar-header -->
+
+<!-- *MENU* -->
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                	#include ("templates/menu.html")
+                </div>
+            </div>
+            <!-- /*MENU* -->
+        </nav>
+
+<!-- *BODY* -->
+        <div id="page-wrapper">
+            <div class="container-fluid">
+$bodyContent
+            </div>
+        </div>
+        <!-- /*BODY* -->
+    </div>
+    <!-- /#wrapper -->
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="/bootstrap/bootstrap.min.js"></script>
+    <script src="/metisMenu/metisMenu.min.js"></script>
+	<script src="/sbadmin2/sb-admin-2.min.js"></script>
+	<script src="https://intercoolerreleases-leaddynocom.netdna-ssl.com/intercooler-1.1.1.min.js"></script>
+</body>
+</html>
+#end

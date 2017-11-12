@@ -1,0 +1,32 @@
+#parse("/templates/master.html")
+#@master()
+
+<div class="row"><div class="col-lg-12">
+
+	<h1 class="page-header">Hauptmen&uuml;</h1>
+	
+	<p style="margin-top: 4em;"><a href="/dockerps">Liste der laufenden Docker Container</a>
+	&nbsp;|&nbsp; <a href="/nrcontainer">Liste aller Docker Container</a></p>
+	<p style="margin-top: 4em;"><a href="/images">Liste aller Docker Images</a></p>
+	
+	<p style="margin-top: 4em;">Container aktualisieren:</p>
+	#foreach($c in $containers)
+		<a ic-get-from="/container/${c.container}/update" ic-indicator="#progress-${c.container}" ic-target="#msg"
+			class="btn btn-default"
+			style="margin-bottom: .5em; margin-right: .5em;" role="button" href="#"><i class="fa fa-cloud-upload fa-fw"></i> $c.container
+			<i id="progress-${c.container}" class="fa fa-spinner fa-pulse" style="display: none;"></i></a>
+	#end
+	<div id="msg" style="margin-top: .5em;"></div>
+
+	#if ($displayEditContainerTitle eq true)
+	<p style="margin-top: 3em;">Containerdefinitionen bearbeiten:</p>
+	#end
+	#foreach($c in $containers)
+		<a href="/manage/container/${c.container}" class="btn btn-default" style="margin-bottom: .5em; margin-right: .5em;"><i class="fa fa-edit fa-fw"></i> $c.container</a>
+	#end
+	
+	<p style="font-size: 8pt; margin-top: 4em; margin-bottom: 2em;">Angemeldeter Benutzer: $user<br/>Version $version</p>
+
+</div></div>
+
+#end

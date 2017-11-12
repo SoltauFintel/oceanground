@@ -1,0 +1,165 @@
+#parse("/templates/master.html")
+#@master()
+
+<div class="row"><div class="col-lg-12">
+
+<h1 class="page-header">Container "${c.name}"</h1>
+
+<h3>Container</h3>
+<table class="table">
+	<tr>
+		<td width="25%">Container Id</td>
+		<td>$c.id</td>
+	</tr>
+	<tr>
+		<td>Name</td>
+		<td><b>$c.name</b></td>
+	</tr>
+	<tr>
+		<td>Status</td>
+		#if ($c.running == "running")
+		<td><span class="label label-success">$c.running</span></td>
+		#elseif ($c.running == "exited")
+		<td><span class="label label-danger">$c.running</span></td>
+		#else
+		<td>$c.running</td>
+		#end
+	</tr>
+	<tr>
+		<td>Ping</td>
+		#if ($ping == "pong")
+		<td><span class="label label-success">$ping</span></td>
+		#else
+		<td><span class="label label-danger">$!ping</span></td>
+		#end
+	</tr>
+	<tr>
+		<td>Erstellt</td>
+		<td>$c.created</td>
+	</tr>
+	<tr>
+		<td>Gestartet</td>
+		<td>$c.startedAt</td>
+	</tr>
+	<tr>
+		<td>Ports</td>
+		<td>$T.esc($c.ports)</td>
+	</tr>
+	<tr>
+		<td>Restart policy</td>
+		<td>
+		#if ($c.restartPolicy == "always")
+			<span class="label label-success">$c.restartPolicy</span>
+			<span> / max retry: </span>
+			<span>$c.restartPolicyMaxRetry</span>
+		#elseif ($c.restartPolicy == "no")
+			<span class="label label-danger">$c.restartPolicy</span>
+		#end
+		</td>
+	</tr>
+</table>
+
+<h3>Image</h3>
+<table class="table">
+	<tr>
+		<td>Image Id</td>
+		<td>$c.imageId</td>
+	</tr>
+	<tr>
+		<td width="25%">Image</td>
+		#if ($c.dockerHubUrl)
+		<td><a href="$c.dockerHubUrl" target="_blank"><b>$!c.image</b></a></td>
+		#else
+		<td><b>$!c.image</b></td>
+		#end
+	</tr>
+	<tr>
+		<td width="25%">Gr&ouml;&szlig;e</td>
+		<td>$!c.size</td>
+	</tr>
+	#if ($c.cmd)
+	<tr>
+		<td>CMD</td>
+		<td>$c.cmd</td>
+	</tr>
+	#end
+	#if ($c.entryPoint)
+	<tr>
+		<td>EntryPoint</td>
+		#if ($c.image)
+		<td>$c.entryPoint</td>
+		#else
+		<td><b>$c.entryPoint</b></td>
+		#end
+	</tr>
+	#end
+</table>
+
+#if ($c.binds)
+<h3>Volumes</h3>
+<table class="table">
+	<tr>
+		<th width="25%">Host path</th>
+		<th>Container path</th>
+	</tr>
+#foreach($v in $c.binds)
+	<tr>
+		<td>$v.path</td>
+		<td>$v.volumePath</td>
+	</tr>
+#end
+#if ($c.binds.size() == 0)
+	<tr>
+		<td colspan="2"><i>- keine Volumes -</i></td>
+	</tr>
+#end
+</table>
+#end
+
+#if ($c.volumes)
+<h3>Volumes/2</h3>
+<table class="table">
+	<tr>
+		<th width="25%">host path</th>
+		<th>container path</th>
+	</tr>
+#foreach($v in $c.volumes)
+	<tr>
+		<td>$v.hostPath</td>
+		<td>$v.containerPath</td>
+	</tr>
+#end
+</table>
+#end
+
+<h3>Env</h3>
+<table class="table">
+#foreach($e in $c.env)
+	<tr>
+		<td width="25%">$e.name</td>
+		<td>$e.value</td>
+	</tr>
+#end
+</table>
+
+<h3>Standard output</h3>
+<pre class="mono log">${output}</pre>
+
+<h3>Error output</h3>
+<pre class="mono log errorlog">${erroroutput}</pre>
+
+<h3>Info</h3>
+<pre class="mono log">$!info</pre>
+
+<p style="margin-top: 3em;">
+<a href="/container/${c.id}/delete?restart=1" class="btn btn-danger">Container durchstarten!</a> &nbsp;
+<a href="/container/${c.id}/delete" class="btn btn-danger">Container löschen!</a> &nbsp;
+<a href="/container/${c.id}/delete?force=1" class="btn btn-danger">Containerlöschung erzwingen!</a> &nbsp;
+<a href="/container/${c.id}/delete?force=1&image=1" class="btn btn-danger">Container- und Imagelöschung erzwingen!</a>
+</p>
+
+<p style="margin-top: 2em; margin-bottom: 3em;"><a href="/dockerps">&lt;&lt; zur&uuml;ck zur Containerliste</a></p>
+
+</div></div>
+
+#end

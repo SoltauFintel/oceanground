@@ -1,0 +1,51 @@
+#parse("/templates/master.html")
+#@master()
+
+<div class="row"><div class="col-lg-12">
+
+<h1 class="page-header">Liste der Docker Images</h1>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Image</th>
+			<th>Version</th>
+			<th>Befehl</th>
+			<th>Registry</th>
+			<th>Autor</th>
+			<th>Erstellt am</th>
+			<th>Gr&ouml;&szlig;e</th>
+		</tr>
+	</thead>
+	<tbody>
+	#foreach($c in $list)
+		<tr>
+			<td><a href="/image/${c.longId}">${c.shortName}</a></td>
+			<td>${c.version}</td>
+			<td style="font-family: Monospace;">${c.command}</td>
+			<td>
+				#if ($c.dockerHubUrl != "")
+				<a href="$c.dockerHubUrl" target="_blank">${c.server}</a>
+				#else
+				${c.server}
+				#end
+			</td>
+			<td>${c.author}</td>
+			<td><nobr>${c.created}</nobr></td>
+			<td style="text-align: right;"><nobr>${c.size}</nobr></td>
+		</tr>
+	#end
+	</tbody>
+</table>
+
+#if ($size == 1)
+<p>$size Image angezeigt (insgesamt: ${clsize})</p>
+#else
+<p>$size Images angezeigt (insgesamt: ${clsize})</p>
+#end
+
+<p><a href="/">&lt;&lt; zur&uuml;ck zur Startseite</a></p>
+
+</div></div>
+
+#end

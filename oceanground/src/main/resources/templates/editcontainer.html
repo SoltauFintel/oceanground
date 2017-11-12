@@ -1,0 +1,66 @@
+#parse("/templates/master.html") #@master()
+
+<div class="row">
+	<h1 class="page-header">Containerdefinition bearbeiten</h1>
+	<div class="col-lg-6">
+		<form action="/manage/container/${c.container}/save" class="form-horizontal">
+			<fieldset>
+				<div class="form-group">
+					<label for="container" class="col-lg-3 control-label">Container</label>
+					<div class="col-lg-9">
+						<input class="form-control" id="container" type="text" name="container" value="$c.container">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="image" class="col-lg-3 control-label">Image</label>
+					<div class="col-lg-9">
+						<input class="form-control" id="image" name="image" value="$c.image">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="portHost" class="col-lg-3 control-label">Host Port</label>
+					<div class="col-lg-2">
+						<input class="form-control" id="portHost" name="portHost" value="$c.portHost">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="portContainer" class="col-lg-3 control-label">Container Port</label>
+					<div class="col-lg-2">
+						<input class="form-control" id="portContainer" name="portContainer" value="$c.portContainer">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="env" class="col-lg-3 control-label">Env</label>
+					<div class="col-lg-9">
+						<input class="form-control" id="env" name="env" value="$c.env">
+					</div>
+					<div class="col-lg-9 col-lg-offset-3">
+						Beispiel: LOGLEVEL=DEBUG,USER=4711
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="pathMappingsText" class="col-lg-3 control-label">Path Mappings</label>
+					<div class="col-lg-9">
+						<textarea wrap="off" style="font-family: Courier New;" class="form-control" rows="6" id="pathMappingsText" name="pathMappingsText">${c.pathMappingsText}</textarea>
+					</div>
+					<div class="col-lg-9 col-lg-offset-3">
+						In jeder Zeile ein Path Mapping eingeben.
+						<br/>ro:hostpath=containerpath
+						<br/>rw:hostpath=containerpath
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-lg-9 col-lg-offset-3">
+						<button type="submit" class="btn btn-primary">Speichern</button>
+						<a href="/manage/container/${c.container}/copy" class="btn btn-default rbtn" style="margin-left: 1em;"><i
+							class="fa fa-copy fa-fw"></i> Neuanlage mit Daten&uuml;bernahme</a>
+						<a href="/manage/container/${c.container}/deletequery" class="btn btn-danger rbtn" style="margin-left: 1em;"><i
+							class="fa fa-remove fa-fw"></i> L&ouml;schen</a>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>
+
+#end

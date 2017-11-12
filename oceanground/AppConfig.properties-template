@@ -1,0 +1,12 @@
+port=9032
+development=true
+imagePrefix=localhost:5000/
+standardImageAuthor=
+webhost=localhost
+
+host=http://localhost:9032
+facebook.state=secret
+facebook.key=
+facebook.secret=
+facebook.url=https://graph.facebook.com/v2.8/me
+IdOfAllowedUser=Facebook#

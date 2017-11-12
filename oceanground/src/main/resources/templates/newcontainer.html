@@ -1,0 +1,63 @@
+#parse("/templates/master.html") #@master()
+
+<div class="row">
+	<h1 class="page-header">Neue Containerdefinition erstellen</h1>
+	<div class="col-lg-6">
+		<form action="/manage/savenew" class="form-horizontal">
+			<fieldset>
+				<div class="form-group">
+					<label for="container" class="col-lg-3 control-label">Container</label>
+					<div class="col-lg-9">
+						<input class="form-control" id="container" type="text" name="container" autofocus="autofocus">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="image" class="col-lg-3 control-label">Image</label>
+					<div class="col-lg-9">
+						<input class="form-control" id="image" name="image">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="portHost" class="col-lg-3 control-label">Host Port</label>
+					<div class="col-lg-2">
+						<input class="form-control" id="portHost" name="portHost">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="portContainer" class="col-lg-3 control-label">Container Port</label>
+					<div class="col-lg-2">
+						<input class="form-control" id="portContainer" name="portContainer">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="env" class="col-lg-3 control-label">Env</label>
+					<div class="col-lg-9">
+						<input class="form-control" id="env" name="env" value="LOGLEVEL=DEBUG">
+					</div>
+					<div class="col-lg-9 col-lg-offset-3">
+						Beispiel: LOGLEVEL=DEBUG,USER=4711
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="pathMappingsText" class="col-lg-3 control-label">Path mappings</label>
+					<div class="col-lg-9">
+						<textarea wrap="off" class="form-control" rows="6" id="pathMappingsText" name="pathMappingsText">ro:/etc/localtime=/etc/localtime
+ro:/etc/timezone=/etc/timezone</textarea>
+					</div>
+					<div class="col-lg-9 col-lg-offset-3">
+						In jeder Zeile ein Path Mapping eingeben.
+						<br/>ro:hostpath=containerpath
+						<br/>rw:hostpath=containerpath
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-lg-9 col-lg-offset-3">
+						<button type="submit" class="btn btn-primary">Speichern</button>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>
+
+#end
