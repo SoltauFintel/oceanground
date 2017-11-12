@@ -1,6 +1,7 @@
 # OceanGround
 
-This is a Docker GUI tool for developers written with Java 8 and the [Maja Web Framework](https://github.com/SoltauFintel/maja-web).
+This is a Docker GUI tool for developers written with Java 8 and
+the [Maja Web Framework](https://github.com/SoltauFintel/maja-web).
 It can show the containers and images.
 It can update containers with one mouse click.
 
@@ -23,7 +24,7 @@ You also need a read-only volume bind from [/AppConfig.properties](https://githu
 
 After that you can call http://{host}:9032 and log in with Facebook.
 
-It's clever to install a 2nd OceanGround container for updating the 1st OceanGround instance. You can access the 2nd instance with Microsoft Edge on http://{host}:9031.
+It's clever to install a 2nd OceanGround container for updating the 1st OceanGround instance. You can access the 2nd instance (with another browser) on http://{host}:9031.
 
     docker run -d \
         --name oceangroundupdater \
