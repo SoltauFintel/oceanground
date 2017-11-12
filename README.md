@@ -21,7 +21,9 @@ You also need a read-only volume bind from [/AppConfig.properties](https://githu
         -v /{hostpath}/AppConfig.properties:/AppConfig.properties:ro \
         mwvb.de:5000/oceanground:0.5.1
 
-It's clever to install a 2nd OceanGround container for updating the 1st OceanGround instance.
+After that you can call http://{host}:9032 and log in with Facebook.
+
+It's clever to install a 2nd OceanGround container for updating the 1st OceanGround instance. You can access the 2nd instance with Microsoft Edge on http://{host}:9031.
 
     docker run -d \
         --name oceangroundupdater \
@@ -32,5 +34,3 @@ It's clever to install a 2nd OceanGround container for updating the 1st OceanGro
         -v /var/run/docker.sock:/var/run/docker.sock \
         -v /{hostpath}/AppConfig.properties-updater:/AppConfig.properties:ro \
         mwvb.de:5000/oceanground:0.5.1
-
-After that you can call http://{host}:9032 and log in with Facebook.
