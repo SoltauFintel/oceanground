@@ -1,5 +1,7 @@
 package de.mwvb.oceanground;
 
+import org.pmw.tinylog.Logger;
+
 import de.mwvb.maja.auth.AuthPlugin;
 import de.mwvb.maja.auth.OneUserAuthorization;
 import de.mwvb.maja.auth.facebook.FacebookFeature;
@@ -118,7 +120,18 @@ public class OceanGroundApp extends AbstractWebApp {
 		auth = new AuthPlugin(
 				new OneUserAuthorization(w[1].trim(), w[0].trim()),
 				new FacebookFeature(),
-				new RememberMeInMongoDB(database));
+				new RememberMeInMongoDB(database, getAppName()));
+	}
+	
+	private String getAppName() {
+		String ret = "OC";
+		String host = config.get("host");
+		int o = host.lastIndexOf(":");
+		if (o >= 0) {
+			ret += host.substring(o + 1);
+		}
+		Logger.info("App name: " + ret);
+		return ret;
 	}
 
 	private void initApp() {
