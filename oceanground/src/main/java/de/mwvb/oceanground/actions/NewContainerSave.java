@@ -4,7 +4,6 @@ import org.pmw.tinylog.Logger;
 
 import de.mwvb.maja.mongo.AbstractDAO;
 import de.mwvb.maja.web.ActionBase;
-import de.mwvb.oceanground.OceanGroundApp;
 import de.mwvb.oceanground.model.Container;
 import de.mwvb.oceanground.model.ContainerDAO;
 
@@ -45,7 +44,7 @@ public class NewContainerSave extends ActionBase {
 		}
 		SaveContainer.validateEnv(env);
 		
-		ContainerDAO dao = new ContainerDAO(OceanGroundApp.database);
+		ContainerDAO dao = new ContainerDAO();
 		Container c = new Container();
 		c.setId(AbstractDAO.code6(AbstractDAO.genId()));
 		c.setContainer(container);

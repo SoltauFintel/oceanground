@@ -13,6 +13,7 @@ import com.github.dockerjava.api.command.InspectImageResponse;
 import com.github.dockerjava.api.exception.NotFoundException;
 
 import de.mwvb.maja.web.Action;
+import de.mwvb.maja.web.AppConfig;
 import de.mwvb.oceanground.OceanGroundApp;
 import de.mwvb.oceanground.docker.OGContainer;
 
@@ -21,10 +22,11 @@ public class ContainerDetails extends Action {
 	private String restFolder;
 	private String restFolderAlternative;
 	
-	public ContainerDetails(String webhost, String restFolder, String restFolderAlternative) {
-		this.webhost = webhost;
-		this.restFolder = restFolder;
-		this.restFolderAlternative = restFolderAlternative;
+	public ContainerDetails() {
+		AppConfig config = new AppConfig();
+		this.webhost = config.get("webhost");
+		this.restFolder = config.get("restfolder", "/rest/");
+		this.restFolderAlternative = config.get("restfolder2", "/rest/_");
 	}
 	
 	@Override

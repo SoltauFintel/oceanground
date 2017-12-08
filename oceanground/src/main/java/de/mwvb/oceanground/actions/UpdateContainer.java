@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import de.mwvb.maja.web.ActionBase;
-import de.mwvb.oceanground.OceanGroundApp;
 import de.mwvb.oceanground.model.Container;
 import de.mwvb.oceanground.model.ContainerDAO;
 import de.mwvb.oceanground.model.UpdateDockerContainer;
@@ -26,7 +25,7 @@ public class UpdateContainer extends ActionBase {
 	private String run2() {
 		String container = req.params("container");
 		SaveContainer.validateContainer(container);
-		ContainerDAO dao = new ContainerDAO(OceanGroundApp.database);
+		ContainerDAO dao = new ContainerDAO();
 		Container c = dao.findByContainer(container);
 		if (c == null) {
 			throw new RuntimeException("Container does not exist!");

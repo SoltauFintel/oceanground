@@ -11,7 +11,7 @@ public class Index extends Action {
 
 	@Override
 	protected void execute() {
-		ContainerDAO dao = new ContainerDAO(OceanGroundApp.database);
+		ContainerDAO dao = new ContainerDAO();
 		List<Container> containers = dao.list();
 		put("containers", containers);
 		put("displayEditContainerTitle", !containers.isEmpty());

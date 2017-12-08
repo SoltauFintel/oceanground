@@ -6,7 +6,6 @@ import java.util.List;
 import org.pmw.tinylog.Logger;
 
 import de.mwvb.maja.web.ActionBase;
-import de.mwvb.oceanground.OceanGroundApp;
 import de.mwvb.oceanground.model.Container;
 import de.mwvb.oceanground.model.ContainerDAO;
 import de.mwvb.oceanground.model.PathMapping;
@@ -40,7 +39,7 @@ public class SaveContainer extends ActionBase {
 		}
 		validateEnv(env);
 		
-		ContainerDAO dao = new ContainerDAO(OceanGroundApp.database);
+		ContainerDAO dao = new ContainerDAO();
 		Container c = dao.findByContainer(containerForLoad);
 		if (c == null) {
 			throw new RuntimeException("Container does not exist!");

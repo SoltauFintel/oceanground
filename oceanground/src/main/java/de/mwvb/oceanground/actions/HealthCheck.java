@@ -12,7 +12,7 @@ public class HealthCheck extends ActionBase {
 			return "ERROR: Docker access may not be possible";
 		}
 		try {
-			new ContainerDAO(OceanGroundApp.database).size();
+			new ContainerDAO().size();
 		} catch (Exception e) {
 			return "ERROR: Database access is not possible";
 		}

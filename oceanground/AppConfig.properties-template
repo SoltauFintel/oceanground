@@ -1,8 +1,11 @@
 port=9032
+app.name=OC9032
 development=true
 imagePrefix=localhost:5000/
 standardImageAuthor=
 webhost=localhost
+
+dbname=oceanground
 
 host=http://localhost:9032
 facebook.state=secret

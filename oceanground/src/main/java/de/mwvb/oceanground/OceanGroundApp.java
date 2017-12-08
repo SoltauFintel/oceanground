@@ -1,12 +1,9 @@
 package de.mwvb.oceanground;
 
-import org.pmw.tinylog.Logger;
-
 import de.mwvb.maja.auth.AuthPlugin;
 import de.mwvb.maja.auth.OneUserAuthorization;
-import de.mwvb.maja.auth.facebook.FacebookFeature;
+import de.mwvb.maja.auth.rememberme.AuthPluginWithRememberMe;
 import de.mwvb.maja.auth.rememberme.KnownUser;
-import de.mwvb.maja.auth.rememberme.RememberMeInMongoDB;
 import de.mwvb.maja.mongo.Database;
 import de.mwvb.maja.web.AbstractWebApp;
 import de.mwvb.maja.web.Action;
@@ -37,7 +34,7 @@ import de.mwvb.oceanground.model.Container;
 import spark.Request;
 
 public class OceanGroundApp extends AbstractWebApp {
-	public static final String VERSION = "0.5.1";
+	public static final String VERSION = "0.6.0";
 	// 0.2: Dependencies update, Java 8u121
 	// 0.2.1: LogConfig, always with pull
 	// 0.3: Umstellung auf plutoweb, Thymeleaf -> Velocity
@@ -57,21 +54,17 @@ public class OceanGroundApp extends AbstractWebApp {
 	// 0.4.0: Container durchstarten
 	// 0.5.0: Umstellung auf Maja, Container editor
 	// 0.5.1: Removed old code, HTML escaping of DockerLogs output
+	// 0.6.0: Umstellung auf Maja 0.2
 	public static final String TITLE = "OceanGround";
-	public static Database database;
-	private static final String DBNAME = "oceanground";
 	public static AbstractDocker docker;
 
 	@Override
 	protected void routes() {
-		_get("/rest/_info", Info.class);
-		_get("/rest/_healthcheck", HealthCheck.class);
-		
 		_get("/", Index.class);
 		_get("/index", Index.class);
 		_get("/dockerps", DockerPS.class);
 		_get("/nrcontainer", NRContainer.class);
-		_get("/container/:container", getContainerDetails());
+		_get("/container/:container", ContainerDetails.class);
 		_get("/container/:id/delete", DeleteContainer.class);
 		_get("/images", Images.class);
 		_get("/image/:imageid", ImageDetails.class);
@@ -85,6 +78,8 @@ public class OceanGroundApp extends AbstractWebApp {
 		_get("/manage/container/:container/copy", ManageCopyContainer.class);
 		_get("/containertable", ContainerTable.class);
 		_get("/container/:container/update", UpdateContainer.class);
+		_get("/rest/_info", Info.class);
+		_get("/rest/_healthcheck", HealthCheck.class);
 	}
 
 	public static void main(String[] args) {
@@ -93,14 +88,7 @@ public class OceanGroundApp extends AbstractWebApp {
 
 	@Override
 	protected void initDatabase() {
-		database = new Database(config.get("dbhost", "localhost"), config.get("dbname", DBNAME),
-				config.get("dbuser"), config.get("dbpw"), Container.class, KnownUser.class);
-	}
-
-	@Override
-	protected String getDatabaseInfo() {
-		return "MongoDB database: " + config.get("dbname", DBNAME) + "@" + config.get("dbhost", "localhost")
-			+ (config.get("dbpw") == null ? "" : " with password");
+		Database.open(Container.class, KnownUser.class);
 	}
 
 	@Override
@@ -116,26 +104,17 @@ public class OceanGroundApp extends AbstractWebApp {
 		} else if (!idOfAllowedUser.contains("#")) {
 			throw new RuntimeException("IdOfAllowedUser has wrong format!");
 		}
-		String w[] = idOfAllowedUser.split("#"); // Service#UserId
-		auth = new AuthPlugin(
-				new OneUserAuthorization(w[1].trim(), w[0].trim()),
-				new FacebookFeature(),
-				new RememberMeInMongoDB(database, getAppName()));
+		final String w[] = idOfAllowedUser.split("#"); // Service#UserId
+		auth = new AuthPluginWithRememberMe() {
+			@Override
+			protected de.mwvb.maja.auth.Authorization getAuthorization() {
+				return new OneUserAuthorization(w[1].trim(), w[0].trim());
+			}
+		};
 	}
 	
-	private String getAppName() {
-		String ret = "OC";
-		String host = config.get("host");
-		int o = host.lastIndexOf(":");
-		if (o >= 0) {
-			ret += host.substring(o + 1);
-		}
-		Logger.info("App name: " + ret);
-		return ret;
-	}
-
 	private void initApp() {
-		if (development) {
+		if (config.isDevelopment()) {
     		docker = new WindowsDocker();
     	} else {
     		docker = new UnixDocker();
@@ -154,9 +133,5 @@ public class OceanGroundApp extends AbstractWebApp {
 			throw new RuntimeException("User Id ist leer!"); // Programmschutz
 		}
 		return userId;
-	}
-
-	private ContainerDetails getContainerDetails() {
-		return new ContainerDetails(config.get("webhost"), config.get("restfolder", "/rest/"), config.get("restfolder2", "/rest/_"));
 	}
 }
