@@ -20,7 +20,6 @@
 	</target>
 	<target name="installDist">
 		<gradle task="installDist"/>
-		<copy file="AppConfig.properties" todir="build/install/oceanground"/>
 	</target>
 	<target name="eclipse">
 		<gradle task="eclipse"/>
