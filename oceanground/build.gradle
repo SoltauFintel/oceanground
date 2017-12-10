@@ -13,7 +13,7 @@ mainClassName = 'de.mwvb.oceanground.OceanGroundApp'
 distZip.enabled = false
 
 dependencies {
-	compile 'com.github.SoltauFintel:maja-auth-mongo:master-SNAPSHOT'
+	compile 'com.github.SoltauFintel.maja:maja-auth-mongo:0.2.0'
 	compile 'com.github.docker-java:docker-java:3.0.9'
 	
 	testCompile 'junit:junit:4.12'

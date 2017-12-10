@@ -5,7 +5,10 @@ imagePrefix=localhost:5000/
 standardImageAuthor=
 webhost=localhost
 
+#dbhost=
 dbname=oceanground
+#dbuser=
+#dbpw=
 
 host=http://localhost:9032
 facebook.state=secret
