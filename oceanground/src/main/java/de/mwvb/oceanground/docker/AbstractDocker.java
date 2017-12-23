@@ -26,7 +26,6 @@ import com.github.dockerjava.api.model.RestartPolicy;
 import com.github.dockerjava.api.model.SearchItem;
 import com.github.dockerjava.api.model.Version;
 import com.github.dockerjava.core.command.PullImageResultCallback;
-import com.google.common.base.Strings;
 
 import de.mwvb.oceanground.model.MaxMemory;
 
@@ -120,7 +119,7 @@ public abstract class AbstractDocker {
 				.exec(log);
 			if (log.awaitCompletion(10, TimeUnit.SECONDS)) {
 				String logtext = log.toString();
-				int size = logtext.length();
+				/*int size = logtext.length();
 				int zeilen = size == 0 ? 0 : logtext.split("\n").length;
 				String p = " lines";
 				if (zeilen == 1) {
@@ -128,10 +127,10 @@ public abstract class AbstractDocker {
 				}
 				System.out.println("- " + Strings.padEnd(container, 25, ' ') + " | " + (error ? "err" : "out") + " | "
 						+ Strings.padStart("" + size, 5, ' ') + " characters" + " | "
-						+ Strings.padStart("" + zeilen, 3, ' ') + p + " of max. 300");
+						+ Strings.padStart("" + zeilen, 3, ' ') + p + " of max. 300");*/
 				return logtext.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
 			} else {
-				System.out.println("- " + container + " | " + (error ? "err" : "out") + " | ERROR: Timeout nach 10 Sekunden");
+				//System.out.println("- " + container + " | " + (error ? "err" : "out") + " | ERROR: Timeout nach 10 Sekunden");
 				return "ERROR: Timeout getting log";
 			}
 		} catch (InterruptedException e) {
