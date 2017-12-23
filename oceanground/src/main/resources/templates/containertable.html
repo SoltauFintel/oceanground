@@ -15,6 +15,7 @@
 			#if ($compact eq false)
 			<th>Env</th>
 			<th>Path mappings</th>
+			<th style="text-align: right;">max. Memory</th>
 			#end
 		</tr>
 	#foreach($c in $containers)
@@ -26,6 +27,7 @@
 			#if ($compact eq false)
 			<td>${c.envHtml}</td>
 			<td>${c.pathMappingsHtml}</td>
+			<td align="right">${c.maxMemory}</td>
 			#end
 		</tr>
 	#end
