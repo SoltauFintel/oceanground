@@ -58,6 +58,7 @@ public class OceanGroundApp extends AbstractWebApp {
 	// 0.6.1: Container Speicher ausgeben
 	// 0.6.2: MaxMemory, Restart Count, Umordnung der Container Details Felder
 	// 0.6.3: Verbesserungen bzgl. Memory Thema
+	// 0.6.4: Verbesserungen bzgl. Memory Thema
 	public static final String TITLE = "OceanGround";
 	public static AbstractDocker docker;
 

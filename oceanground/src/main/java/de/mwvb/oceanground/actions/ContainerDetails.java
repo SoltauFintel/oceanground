@@ -39,8 +39,8 @@ public class ContainerDetails extends Action {
 			InspectContainerResponse c_ = OceanGroundApp.docker.inspectContainer(container);
 			InspectImageResponse image = OceanGroundApp.docker.inspectImage(c_.getImageId());
 			OGContainer c = new OGContainer(c_, image);
+			calculateMemoryUsage(c);
 			put("c", c);
-			put("memoryUsage", "running".equals(c.getStatus()) ? OceanGroundApp.docker.stats(container) : "-");
 			
 			put("output", OceanGroundApp.docker.logs(container, false));
 			put("erroroutput", OceanGroundApp.docker.logs(container, true));
@@ -49,6 +49,14 @@ public class ContainerDetails extends Action {
 			put("info", getInfo(c.getPublicPort()));
 		} catch (NotFoundException e) {
 			throw new RuntimeException("Container \"" + container + "\" nicht vorhanden!");
+		}
+	}
+
+	private void calculateMemoryUsage(OGContainer c) {
+		if ("running".equalsIgnoreCase(c.getRunning())) {
+			c.setMemoryUsage(OceanGroundApp.docker.stats(c.getId())); // teuer
+		} else {
+			c.setMemoryUsage("-");
 		}
 	}
 
