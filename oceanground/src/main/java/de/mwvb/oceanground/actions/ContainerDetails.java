@@ -38,9 +38,9 @@ public class ContainerDetails extends Action {
 			
 			InspectContainerResponse c_ = OceanGroundApp.docker.inspectContainer(container);
 			InspectImageResponse image = OceanGroundApp.docker.inspectImage(c_.getImageId());
-			put("memoryUsage", OceanGroundApp.docker.stats(container));
 			OGContainer c = new OGContainer(c_, image);
 			put("c", c);
+			put("memoryUsage", "running".equals(c.getStatus()) ? OceanGroundApp.docker.stats(container) : "-");
 			
 			put("output", OceanGroundApp.docker.logs(container, false));
 			put("erroroutput", OceanGroundApp.docker.logs(container, true));
