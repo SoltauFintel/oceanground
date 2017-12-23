@@ -12,6 +12,7 @@ import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.command.CreateContainerResponse;
 import com.github.dockerjava.api.command.InspectContainerResponse;
 import com.github.dockerjava.api.command.InspectImageResponse;
+import com.github.dockerjava.api.command.StatsCmd;
 import com.github.dockerjava.api.exception.NotFoundException;
 import com.github.dockerjava.api.model.Bind;
 import com.github.dockerjava.api.model.Container;
@@ -172,5 +173,21 @@ public abstract class AbstractDocker {
 	
 	public void restartContainer(String id) {
 		docker.restartContainerCmd(id).exec();
+	}
+	
+	public String stats(String id) {
+		StatsCmd c = docker.statsCmd(id);
+		StatsCallback cb = new StatsCallback();
+		c.exec(cb);
+		int n = 0;
+		while ("?".equals(cb.usage)) {
+			try {
+				Thread.sleep(250);
+			} catch (InterruptedException e) {
+				return "???";
+			}
+			if (++n > 50) return "??";
+		}
+		return cb.usage;
 	}
 }

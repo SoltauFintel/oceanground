@@ -37,6 +37,7 @@ public class OGContainer {
 	private String size;
 	private String dockerHubUrl;
 	public Integer publicPort;
+	private String memoryUsage = "";
 	
 	public OGContainer() {
 	}
@@ -245,5 +246,13 @@ public class OGContainer {
 
 	public Integer getPublicPort() {
 		return publicPort;
+	}
+
+	public String getMemoryUsage() {
+		return memoryUsage;
+	}
+
+	public void setMemoryUsage(String memoryUsage) {
+		this.memoryUsage = memoryUsage;
 	}
 }

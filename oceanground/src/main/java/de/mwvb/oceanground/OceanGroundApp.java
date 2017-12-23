@@ -34,7 +34,7 @@ import de.mwvb.oceanground.model.Container;
 import spark.Request;
 
 public class OceanGroundApp extends AbstractWebApp {
-	public static final String VERSION = "0.6.0";
+	public static final String VERSION = "0.6.1";
 	// 0.2: Dependencies update, Java 8u121
 	// 0.2.1: LogConfig, always with pull
 	// 0.3: Umstellung auf plutoweb, Thymeleaf -> Velocity
@@ -55,6 +55,7 @@ public class OceanGroundApp extends AbstractWebApp {
 	// 0.5.0: Umstellung auf Maja, Container editor
 	// 0.5.1: Removed old code, HTML escaping of DockerLogs output
 	// 0.6.0: Umstellung auf Maja 0.2
+	// 0.6.1: Container Speicher ausgeben
 	public static final String TITLE = "OceanGround";
 	public static AbstractDocker docker;
 

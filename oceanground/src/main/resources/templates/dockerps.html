@@ -12,10 +12,17 @@
 		<br/>$c.status
 		<br/>Port: $c.ports
 		<br/>Image: $c.image
+#if ($c.memoryUsage ne '')		
+		<br/>Speicher: $c.memoryUsage
+#end
 	</p>
 </div>
 #end
 
+</div>
+
+<div class="row">
+	<div>$totalMemory</div>
 </div>
 
 #end
