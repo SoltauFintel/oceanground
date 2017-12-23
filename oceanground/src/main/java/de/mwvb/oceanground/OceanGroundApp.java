@@ -34,7 +34,7 @@ import de.mwvb.oceanground.model.Container;
 import spark.Request;
 
 public class OceanGroundApp extends AbstractWebApp {
-	public static final String VERSION = "0.6.3";
+	public static final String VERSION = "0.6.4";
 	// 0.2: Dependencies update, Java 8u121
 	// 0.2.1: LogConfig, always with pull
 	// 0.3: Umstellung auf plutoweb, Thymeleaf -> Velocity
