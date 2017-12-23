@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 import org.pmw.tinylog.Logger;
 
 import com.github.dockerjava.api.DockerClient;
+import com.github.dockerjava.api.command.CreateContainerCmd;
 import com.github.dockerjava.api.command.CreateContainerResponse;
 import com.github.dockerjava.api.command.InspectContainerResponse;
 import com.github.dockerjava.api.command.InspectImageResponse;
@@ -26,6 +27,8 @@ import com.github.dockerjava.api.model.SearchItem;
 import com.github.dockerjava.api.model.Version;
 import com.github.dockerjava.core.command.PullImageResultCallback;
 import com.google.common.base.Strings;
+
+import de.mwvb.oceanground.model.MaxMemory;
 
 public abstract class AbstractDocker {
 	private final DockerClient docker;
@@ -68,20 +71,23 @@ public abstract class AbstractDocker {
 		return r;
 	}
 
-	public void run(String container, String image, int port, String env, List<Bind> binds) {
-		run(container, image, port, port, env, binds);
+	public void run(String container, String image, int port, String env, List<Bind> binds, MaxMemory maxMemory) {
+		run(container, image, port, port, env, binds, maxMemory);
 	}
 	
-	public void run(String container, String image, int portContainer, int portHost, String env, List<Bind> binds) {
+	public void run(String container, String image, int portContainer, int portHost, String env, List<Bind> binds, MaxMemory maxMemory) {
 		PortBinding ports = new PortBinding(Binding.bindPort(portHost), ExposedPort.tcp(portContainer));
-		CreateContainerResponse k = docker.createContainerCmd(image)
+		CreateContainerCmd cmd = docker.createContainerCmd(image)
 				.withName(container)
 				.withPortBindings(ports)
 				.withEnv(env.split(","))
 				.withBinds(binds)
 				.withRestartPolicy(RestartPolicy.alwaysRestart()) // TODO evtl. in Containerdefinition konfigurierbar machen
-				.withLogConfig(getLogConfig()) // TODO evtl. in Containerdefinition konfigurierbar machen
-				.exec();
+				.withLogConfig(getLogConfig()); // TODO evtl. in Containerdefinition konfigurierbar machen
+		if (maxMemory != null) {
+			cmd = cmd.withMemory(maxMemory.getBytes());
+		}
+		CreateContainerResponse k = cmd.exec();
 		if (k != null && k.getWarnings() != null && k.getWarnings().length > 0) {
 			Logger.warn("DOCKER RUN \"" + container + "\" produced " + k.getWarnings().length + " warning(s):");
 			for (String warning : k.getWarnings()) {
@@ -182,7 +188,7 @@ public abstract class AbstractDocker {
 		int n = 0;
 		while ("?".equals(cb.usage)) {
 			try {
-				Thread.sleep(250);
+				Thread.sleep(200);
 			} catch (InterruptedException e) {
 				return "???";
 			}

@@ -30,6 +30,7 @@ public class Container {
 	private int portHost;
 	private String env;
 	private List<PathMapping> pathMappings = new ArrayList<>();
+	private String maxMemory = "";
 
 	public String getId() {
 		return id;
@@ -114,5 +115,13 @@ public class Container {
 			throw new NullPointerException("Arg pathMappings must not be null!");
 		}
 		this.pathMappings = pathMappings;
+	}
+
+	public String getMaxMemory() {
+		return maxMemory;
+	}
+
+	public void setMaxMemory(String maxMemory) {
+		this.maxMemory = maxMemory;
 	}
 }

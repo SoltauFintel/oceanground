@@ -38,6 +38,8 @@ public class OGContainer {
 	private String dockerHubUrl;
 	public Integer publicPort;
 	private String memoryUsage = "";
+	private String maxMemory;
+	private Integer restartCount;
 	
 	public OGContainer() {
 	}
@@ -106,6 +108,16 @@ public class OGContainer {
 				binds.add(new OGBind(bind));
 			}
 		}
+		
+		if (c.getHostConfig().getMemory() < 1) {
+			this.maxMemory = "-";
+		} else if (c.getHostConfig().getMemory() >= (1024l * 1024l)) {
+			long memory = c.getHostConfig().getMemory() / (1024l * 1024l);
+			this.maxMemory = memory + " MB";
+		} else {
+			this.maxMemory = c.getHostConfig().getMemory() + " Bytes";
+		}
+		restartCount = c.getRestartCount();
 	}
 	
 	public static String transformDate(String d) {
@@ -254,5 +266,13 @@ public class OGContainer {
 
 	public void setMemoryUsage(String memoryUsage) {
 		this.memoryUsage = memoryUsage;
+	}
+
+	public String getMaxMemory() {
+		return maxMemory;
+	}
+
+	public String getRestartCount() {
+		return restartCount == null ? "?" : "" + restartCount;
 	}
 }

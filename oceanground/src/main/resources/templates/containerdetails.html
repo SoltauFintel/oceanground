@@ -8,12 +8,12 @@
 <h3>Container</h3>
 <table class="table">
 	<tr>
-		<td width="25%">Container Id</td>
-		<td>$c.id</td>
+		<td width="25%">Name</td>
+		<td><b>$c.name</b></td>
 	</tr>
 	<tr>
-		<td>Name</td>
-		<td><b>$c.name</b></td>
+		<td>Ports</td>
+		<td>$T.esc($c.ports)</td>
 	</tr>
 	<tr>
 		<td>Status</td>
@@ -34,6 +34,10 @@
 		#end
 	</tr>
 	<tr>
+		<td>Container Id</td>
+		<td>$c.id</td>
+	</tr>
+	<tr>
 		<td>Erstellt</td>
 		<td>$c.created</td>
 	</tr>
@@ -46,8 +50,8 @@
 		<td>$memoryUsage</td>
 	</tr>
 	<tr>
-		<td>Ports</td>
-		<td>$T.esc($c.ports)</td>
+		<td>max. Speicher</td>
+		<td>$c.maxMemory</td>
 	</tr>
 	<tr>
 		<td>Restart policy</td>
@@ -60,6 +64,14 @@
 			<span class="label label-danger">$c.restartPolicy</span>
 		#end
 		</td>
+	</tr>
+	<tr>
+		<td>Restarts</td>
+		#if ($c.restartCount == "0")
+		<td>$c.restartCount</td>
+		#else
+		<td><span class="label label-danger">$c.restartCount</span></td>
+		#end
 	</tr>
 </table>
 

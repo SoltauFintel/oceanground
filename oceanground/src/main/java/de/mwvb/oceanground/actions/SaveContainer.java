@@ -8,6 +8,7 @@ import org.pmw.tinylog.Logger;
 import de.mwvb.maja.web.ActionBase;
 import de.mwvb.oceanground.model.Container;
 import de.mwvb.oceanground.model.ContainerDAO;
+import de.mwvb.oceanground.model.MaxMemory;
 import de.mwvb.oceanground.model.PathMapping;
 
 public class SaveContainer extends ActionBase {
@@ -23,6 +24,7 @@ public class SaveContainer extends ActionBase {
 		String portContainer = req.queryParams("portContainer").trim();
 		String env = req.queryParams("env").trim(); // $unsafe
 		String pathMappingsText = req.queryParams("pathMappingsText").trim(); // $unsafe
+		String maxMemory = req.queryParams("maxMemory");
 
 		validateContainer(container);
 		image = validateImage(image, container);
@@ -37,6 +39,7 @@ public class SaveContainer extends ActionBase {
 		if (n_portHost < 0 || n_portHost > 65535) {
 			throw new RuntimeException("Host port must be in range 0 .. 65535!");
 		}
+		MaxMemory mm = new MaxMemory(maxMemory); // validates the input
 		validateEnv(env);
 		
 		ContainerDAO dao = new ContainerDAO();
@@ -49,6 +52,7 @@ public class SaveContainer extends ActionBase {
 		c.setPortContainer(n_portContainer);
 		c.setPortHost(n_portHost);
 		c.setEnv(env);
+		c.setMaxMemory(mm.getInput());
 		c.setPathMappings(getPathMappings(pathMappingsText));
 		dao.save(c);
 		Logger.info("Saved container (#" + c.getId() + ") " + c.getContainer() + " -> " + c.getImage());
