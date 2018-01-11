@@ -10,11 +10,16 @@ compileJava.options.encoding = 'windows-1252'
 compileTestJava.options.encoding = 'windows-1252'
 
 mainClassName = 'de.mwvb.oceanground.OceanGroundApp'
+applicationDefaultJvmArgs = ['-XX:+UnlockExperimentalVMOptions', '-XX:MaxRAMFraction=1', '-XX:+UseCGroupMemoryLimitForHeap']
 distZip.enabled = false
 
 dependencies {
 	compile 'com.github.SoltauFintel.maja:maja-auth-mongo:0.2.0'
 	compile 'com.github.docker-java:docker-java:3.0.9'
+
+	compile 'org.eclipse.jetty:jetty-server:9.4.8.v20171121'
+	compile 'org.eclipse.jetty:jetty-webapp:9.4.8.v20171121'
+	compile 'org.eclipse.jetty:jetty-client:9.4.8.v20171121'
 	
 	testCompile 'junit:junit:4.12'
 }
@@ -46,7 +51,7 @@ docker {
 		ports = [ 9032 ]
 		def imagename = 'mwvb.de:5000/oceanground'
 		if (target == 'base') {
-			baseImage = 'openjdk:8u121-jre'
+			baseImage = 'openjdk:8u151-jre-alpine'
 			tag = imagename + 'base'
 		} else {
 			baseImage = imagename + 'base'
