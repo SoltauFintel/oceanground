@@ -1,8 +1,8 @@
 package de.mwvb.oceanground;
 
+import de.mwvb.auth.schild.SchildAuthPlugin;
 import de.mwvb.maja.auth.AuthPlugin;
 import de.mwvb.maja.auth.OneUserAuthorization;
-import de.mwvb.maja.auth.rememberme.AuthPluginWithRememberMe;
 import de.mwvb.maja.auth.rememberme.KnownUser;
 import de.mwvb.maja.mongo.Database;
 import de.mwvb.maja.web.AbstractWebApp;
@@ -34,7 +34,7 @@ import de.mwvb.oceanground.model.Container;
 import spark.Request;
 
 public class OceanGroundApp extends AbstractWebApp {
-	public static final String VERSION = "0.6.5";
+	public static final String VERSION = "0.6.6";
 	// 0.2: Dependencies update, Java 8u121
 	// 0.2.1: LogConfig, always with pull
 	// 0.3: Umstellung auf plutoweb, Thymeleaf -> Velocity
@@ -60,6 +60,7 @@ public class OceanGroundApp extends AbstractWebApp {
 	// 0.6.3: Verbesserungen bzgl. Memory Thema
 	// 0.6.4: Verbesserungen bzgl. Memory Thema
 	// 0.6.5: Verbesserungen bzgl. Memory Thema
+	// 0.6.6: Schild auth
 	public static final String TITLE = "OceanGround";
 	public static AbstractDocker docker;
 
@@ -110,7 +111,7 @@ public class OceanGroundApp extends AbstractWebApp {
 			throw new RuntimeException("IdOfAllowedUser has wrong format!");
 		}
 		final String w[] = idOfAllowedUser.split("#"); // Service#UserId
-		auth = new AuthPluginWithRememberMe() {
+		auth = new SchildAuthPlugin() {
 			@Override
 			protected de.mwvb.maja.auth.Authorization getAuthorization() {
 				return new OneUserAuthorization(w[1].trim(), w[0].trim());
