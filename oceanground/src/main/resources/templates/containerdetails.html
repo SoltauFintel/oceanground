@@ -1,6 +1,13 @@
 #parse("/templates/master.html")
 #@master()
 
+<style>
+.btna {
+	margin-right: 1em;
+	margin-top: 1em;
+}
+</style>
+
 <div class="row"><div class="col-lg-12">
 
 <h1 class="page-header">Container "${c.name}"</h1>
@@ -167,11 +174,13 @@
 <h3>Info</h3>
 <pre class="mono log">$!info</pre>
 
-<p style="margin-top: 3em;">
-<a href="/container/${c.id}/delete?restart=1" class="btn btn-danger">Container durchstarten!</a> &nbsp;
-<a href="/container/${c.id}/delete" class="btn btn-danger">Container löschen!</a> &nbsp;
-<a href="/container/${c.id}/delete?force=1" class="btn btn-danger">Containerlöschung erzwingen!</a> &nbsp;
-<a href="/container/${c.id}/delete?force=1&image=1" class="btn btn-danger">Container- und Imagelöschung erzwingen!</a>
+<p style="margin-top: 2em;">
+<a href="/container/${c.id}/start" class="btn btn-danger btna">Container starten!</a>
+<a href="/container/${c.id}/stop" class="btn btn-danger btna">Container stoppen!</a>
+<a href="/container/${c.id}/delete?restart=1" class="btn btn-danger btna">Container durchstarten!</a>
+<a href="/container/${c.id}/delete" class="btn btn-danger btna">Container löschen!</a>
+<a href="/container/${c.id}/delete?force=1" class="btn btn-danger btna">Containerlöschung erzwingen!</a>
+<a href="/container/${c.id}/delete?force=1&image=1" class="btn btn-danger btna">Container- und Imagelöschung erzwingen!</a>
 </p>
 
 <p style="margin-top: 2em; margin-bottom: 3em;"><a href="/dockerps">&lt;&lt; zur&uuml;ck zur Containerliste</a></p>

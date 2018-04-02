@@ -175,11 +175,19 @@ public abstract class AbstractDocker {
 	public void deleteContainer(String id, Boolean force) {
 		docker.removeContainerCmd(id).withForce(force).exec();
 	}
-	
+
+	public void startContainer(String id) {
+		docker.startContainerCmd(id).exec();
+	}
+
 	public void restartContainer(String id) {
 		docker.restartContainerCmd(id).exec();
 	}
-	
+
+	public void stopContainer(String id) {
+		docker.stopContainerCmd(id).exec();
+	}
+
 	public String stats(String id) {
 		StatsCmd c = docker.statsCmd(id);
 		StatsCallback cb = new StatsCallback();

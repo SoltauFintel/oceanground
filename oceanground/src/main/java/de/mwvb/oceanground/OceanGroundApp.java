@@ -26,6 +26,8 @@ import de.mwvb.oceanground.actions.NRContainer;
 import de.mwvb.oceanground.actions.NewContainer;
 import de.mwvb.oceanground.actions.NewContainerSave;
 import de.mwvb.oceanground.actions.SaveContainer;
+import de.mwvb.oceanground.actions.StartContainer;
+import de.mwvb.oceanground.actions.StopContainer;
 import de.mwvb.oceanground.actions.UpdateContainer;
 import de.mwvb.oceanground.docker.AbstractDocker;
 import de.mwvb.oceanground.docker.OGImage;
@@ -63,6 +65,7 @@ public class OceanGroundApp extends AbstractWebApp {
 	// 0.6.5: Verbesserungen bzgl. Memory Thema
 	// 0.6.6: Schild auth
 	// 0.6.7: Schild auth
+	// 0.7.0: Container starten und stoppen
 	public static final String TITLE = "OceanGround";
 	public static AbstractDocker docker;
 
@@ -74,6 +77,8 @@ public class OceanGroundApp extends AbstractWebApp {
 		_get("/nrcontainer", NRContainer.class);
 		_get("/container/:container", ContainerDetails.class);
 		_get("/container/:id/delete", DeleteContainer.class);
+		_get("/container/:id/start", StartContainer.class);
+		_get("/container/:id/stop", StopContainer.class);
 		_get("/images", Images.class);
 		_get("/image/:imageid", ImageDetails.class);
 		_get("/image/:imageid/delete-similar", DeleteSimilarImages.class);
