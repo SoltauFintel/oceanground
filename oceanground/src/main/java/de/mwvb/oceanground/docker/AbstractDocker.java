@@ -27,6 +27,7 @@ import com.github.dockerjava.api.model.SearchItem;
 import com.github.dockerjava.api.model.Version;
 import com.github.dockerjava.core.command.PullImageResultCallback;
 
+import de.mwvb.maja.web.AppConfig;
 import de.mwvb.oceanground.model.MaxMemory;
 
 public abstract class AbstractDocker {
@@ -81,8 +82,10 @@ public abstract class AbstractDocker {
 				.withPortBindings(ports)
 				.withEnv(env.split(","))
 				.withBinds(binds)
-				.withRestartPolicy(RestartPolicy.alwaysRestart()) // TODO evtl. in Containerdefinition konfigurierbar machen
-				.withLogConfig(getLogConfig()); // TODO evtl. in Containerdefinition konfigurierbar machen
+				.withRestartPolicy(RestartPolicy.alwaysRestart()); // TODO evtl. in Containerdefinition konfigurierbar machen
+		if (!"false".equals(new AppConfig().get("with-log-opts"))) {
+			cmd = cmd.withLogConfig(getLogConfig()); // TO-DO evtl. in Containerdefinition konfigurierbar machen
+		}
 		if (maxMemory != null) {
 			cmd = cmd.withMemory(maxMemory.getBytes());
 		}
@@ -149,7 +152,7 @@ public abstract class AbstractDocker {
 		}
 	}
 	
-	private LogConfig getLogConfig() {
+	protected LogConfig getLogConfig() {
 		Map<String, String> config = new HashMap<>();
 		config.put("max-size", "1m");
 		config.put("max-file", "3");
