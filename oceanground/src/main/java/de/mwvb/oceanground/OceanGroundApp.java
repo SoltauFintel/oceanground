@@ -1,5 +1,7 @@
 package de.mwvb.oceanground;
 
+import org.pmw.tinylog.Logger;
+
 import de.mwvb.auth.schild.SchildAuthPlugin;
 import de.mwvb.maja.auth.AuthPlugin;
 import de.mwvb.maja.auth.OneUserAuthorization;
@@ -8,6 +10,7 @@ import de.mwvb.maja.auth.rememberme.RememberMeInMongoDB;
 import de.mwvb.maja.mongo.Database;
 import de.mwvb.maja.web.AbstractWebApp;
 import de.mwvb.maja.web.Action;
+import de.mwvb.maja.web.NoOpAuthPlugin;
 import de.mwvb.oceanground.actions.ContainerDetails;
 import de.mwvb.oceanground.actions.ContainerTable;
 import de.mwvb.oceanground.actions.DeleteContainer;
@@ -101,6 +104,7 @@ public class OceanGroundApp extends AbstractWebApp {
 
 	@Override
 	protected void initDatabase() {
+		System.out.println("connecting to database...");
 		Database.open(Container.class, KnownUser.class);
 	}
 
@@ -111,6 +115,11 @@ public class OceanGroundApp extends AbstractWebApp {
 	}
 
 	private void initAuth() {
+		if ("false".equals(config.get("auth"))) {
+			Logger.warn("auth off");
+			auth = new NoOpAuthPlugin();
+			return;
+		}
 		String idOfAllowedUser = config.get("IdOfAllowedUser");
 		if (idOfAllowedUser == null || idOfAllowedUser.trim().isEmpty()) {
 			throw new RuntimeException("Missing config IdOfAllowedUser!");
