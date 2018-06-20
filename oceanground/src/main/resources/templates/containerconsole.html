@@ -1,0 +1,12 @@
+#parse("/templates/master.html")
+#@master()
+
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header">Komplette Konsolenausgabe von Container "${container}"</h1>
+		<pre class="mono log">${output}</pre>
+		<p style="margin-top: 2em; margin-bottom: 3em;"><a href="/container/${container}">&lt;&lt; zur&uuml;ck zum Container</a></p>
+	</div>
+</div>
+
+#end

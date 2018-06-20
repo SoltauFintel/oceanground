@@ -13,6 +13,7 @@ import com.github.dockerjava.api.command.CreateContainerCmd;
 import com.github.dockerjava.api.command.CreateContainerResponse;
 import com.github.dockerjava.api.command.InspectContainerResponse;
 import com.github.dockerjava.api.command.InspectImageResponse;
+import com.github.dockerjava.api.command.LogContainerCmd;
 import com.github.dockerjava.api.command.StatsCmd;
 import com.github.dockerjava.api.exception.NotFoundException;
 import com.github.dockerjava.api.model.Bind;
@@ -114,12 +115,14 @@ public abstract class AbstractDocker {
 		return docker.inspectContainerCmd(id).exec();
 	}
 	
-	public String logs(String container, boolean error) {
+	public String logs(String container, boolean error, boolean komplett) {
 		try {
 			LogContainerCallback log = new LogContainerCallback();
-			docker.logContainerCmd(container).withStdOut(!error).withStdErr(error)
-				.withTail(300) // max. die jüngsten 300 Zeilen
-				.exec(log);
+			LogContainerCmd cmd = docker.logContainerCmd(container).withStdOut(!error).withStdErr(error);
+			if (!komplett) {
+				cmd = cmd.withTail(300); // max. die jüngsten 300 Zeilen
+			}
+			cmd.exec(log);
 			if (log.awaitCompletion(10, TimeUnit.SECONDS)) {
 				String logtext = log.toString();
 				/*int size = logtext.length();

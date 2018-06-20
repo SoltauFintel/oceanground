@@ -11,6 +11,7 @@ import de.mwvb.maja.mongo.Database;
 import de.mwvb.maja.web.AbstractWebApp;
 import de.mwvb.maja.web.Action;
 import de.mwvb.maja.web.NoOpAuthPlugin;
+import de.mwvb.oceanground.actions.ContainerConsole;
 import de.mwvb.oceanground.actions.ContainerDetails;
 import de.mwvb.oceanground.actions.ContainerTable;
 import de.mwvb.oceanground.actions.DeleteContainer;
@@ -40,7 +41,7 @@ import de.mwvb.oceanground.model.Container;
 import spark.Request;
 
 public class OceanGroundApp extends AbstractWebApp {
-	public static final String VERSION = "0.7.1";
+	public static final String VERSION = "0.7.2";
 	// 0.2: Dependencies update, Java 8u121
 	// 0.2.1: LogConfig, always with pull
 	// 0.3: Umstellung auf plutoweb, Thymeleaf -> Velocity
@@ -70,6 +71,7 @@ public class OceanGroundApp extends AbstractWebApp {
 	// 0.6.7: Schild auth
 	// 0.7.0: Container starten und stoppen
 	// 0.7.1: new config parameters: auth, docker.version
+	// 0.7.2: Stdout complete
 	public static final String TITLE = "OceanGround";
 	public static AbstractDocker docker;
 
@@ -79,6 +81,7 @@ public class OceanGroundApp extends AbstractWebApp {
 		_get("/index", Index.class);
 		_get("/dockerps", DockerPS.class);
 		_get("/nrcontainer", NRContainer.class);
+		_get("/container/:container/console/std", ContainerConsole.class);
 		_get("/container/:container", ContainerDetails.class);
 		_get("/container/:id/delete", DeleteContainer.class);
 		_get("/container/:id/start", StartContainer.class);

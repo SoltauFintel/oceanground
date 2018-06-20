@@ -42,8 +42,8 @@ public class ContainerDetails extends Action {
 			calculateMemoryUsage(c);
 			put("c", c);
 			
-			put("output", OceanGroundApp.docker.logs(container, false));
-			put("erroroutput", OceanGroundApp.docker.logs(container, true));
+			put("output", OceanGroundApp.docker.logs(container, false, false));
+			put("erroroutput", OceanGroundApp.docker.logs(container, true, false));
 			
 			put("ping", getPing(c.getPublicPort()));
 			put("info", getInfo(c.getPublicPort()));
