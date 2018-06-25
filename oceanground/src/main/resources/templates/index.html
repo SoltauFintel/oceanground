@@ -26,8 +26,11 @@
 		<a href="/manage/container/${c.container}" class="btn btn-default" style="margin-bottom: .5em; margin-right: .5em;"><i class="fa fa-edit fa-fw"></i> $c.container</a>
 	#end
 	
-	<p style="font-size: 8pt; margin-top: 4em; margin-bottom: 2em;">Angemeldeter Benutzer: $user | <a href="/login/schild/cu">Benutzer wechseln</a>
-	<br/>Version $version</p>
+	<p style="font-size: 8pt; margin-top: 4em; margin-bottom: 2em;">
+	#if($user)Angemeldeter Benutzer: $user | <a href="/login/schild/cu">Benutzer wechseln</a>#end
+	<br/>Version $version
+	| <a href="https://github.com/SoltauFintel/oceanground">OceanGround Homepage</a>
+	</p>
 
 </div></div>
 
