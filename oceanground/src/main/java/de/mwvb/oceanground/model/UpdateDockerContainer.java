@@ -21,7 +21,8 @@ public class UpdateDockerContainer {
 		
 		Logger.debug("   docker run  " + c.getContainer());
 		OceanGroundApp.docker.run(c.getContainer(), c.getImage(), c.getPortContainer(), c.getPortHost(), c.getEnv(),
-				c.getBinds(), new MaxMemory(c.getMaxMemory()));
+				c.getBinds(),
+				c.getMaxMemory() == null || c.getMaxMemory().isEmpty() ? null : new MaxMemory(c.getMaxMemory()));
 		
 //		try {
 //			Thread.sleep(1500);

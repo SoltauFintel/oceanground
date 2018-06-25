@@ -39,7 +39,12 @@ public class SaveContainer extends ActionBase {
 		if (n_portHost < 0 || n_portHost > 65535) {
 			throw new RuntimeException("Host port must be in range 0 .. 65535!");
 		}
-		MaxMemory mm = new MaxMemory(maxMemory); // validates the input
+		MaxMemory mm;
+		if (maxMemory == null || maxMemory.trim().isEmpty()) {
+			mm = null;
+		} else {
+			mm = new MaxMemory(maxMemory); // validates the input
+		}
 		validateEnv(env);
 		
 		ContainerDAO dao = new ContainerDAO();
@@ -52,7 +57,7 @@ public class SaveContainer extends ActionBase {
 		c.setPortContainer(n_portContainer);
 		c.setPortHost(n_portHost);
 		c.setEnv(env);
-		c.setMaxMemory(mm.getInput());
+		c.setMaxMemory(mm == null ? null : mm.getInput());
 		c.setPathMappings(getPathMappings(pathMappingsText));
 		dao.save(c);
 		Logger.info("Saved container (#" + c.getId() + ") " + c.getContainer() + " -> " + c.getImage());

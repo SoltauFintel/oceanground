@@ -77,6 +77,10 @@ public abstract class AbstractDocker {
 	}
 	
 	public void run(String container, String image, int portContainer, int portHost, String env, List<Bind> binds, MaxMemory maxMemory) {
+		System.out.println("\ndocker run. container=" + container + ", image=" + image + ", env=" + env + ", alwaysRestart");
+		binds.forEach(b -> {
+			System.out.println("\tbind: path=" + b.getPath() + ", volume=" + b.getVolume());
+		});
 		PortBinding ports = new PortBinding(Binding.bindPort(portHost), ExposedPort.tcp(portContainer));
 		CreateContainerCmd cmd = docker.createContainerCmd(image)
 				.withName(container)
@@ -85,9 +89,11 @@ public abstract class AbstractDocker {
 				.withBinds(binds)
 				.withRestartPolicy(RestartPolicy.alwaysRestart()); // TODO evtl. in Containerdefinition konfigurierbar machen
 		if (!"false".equals(new AppConfig().get("with-log-opts"))) {
+			System.out.println("\twith log config");
 			cmd = cmd.withLogConfig(getLogConfig()); // TO-DO evtl. in Containerdefinition konfigurierbar machen
 		}
 		if (maxMemory != null) {
+			System.out.println("\twith maxMem=" + maxMemory.getInput());
 			cmd = cmd.withMemory(maxMemory.getBytes());
 		}
 		CreateContainerResponse k = cmd.exec();
@@ -101,13 +107,36 @@ public abstract class AbstractDocker {
 	}
 	
 	public void pull(String image) {
-		docker.pullImageCmd(image).exec(new PullImageResultCallback()).awaitSuccess();
+		System.out.println("\ndocker pull " + image);
+		PullImageResultCallback callback = new PullImageResultCallback() {
+			@Override
+			public void onError(Throwable throwable) {
+				System.out.println("PullImageResultCallback.onError:");
+				throwable.printStackTrace(System.out);
+				super.onError(throwable);
+			}
+			
+			@Override
+			public void onComplete() {
+				System.out.println("PullImageResultCallback.onComplete");
+				super.onComplete();
+			}
+		};
+		try {
+			docker.pullImageCmd(image).exec(callback).awaitSuccess();
+			System.out.println("pullImageCmd ok");
+		} catch (Exception up) {
+			System.out.println("pullImageCmd Exception:");
+			up.printStackTrace(System.out);
+			throw up;
+		}
 	}
 
 	public void rm_force(String container) {
+		System.out.println("docker rm -f " + container);
 		try {
 			docker.removeContainerCmd(container).withForce(true).exec();
-		} catch (NotFoundException e) {
+		} catch (NotFoundException e) { //
 		}
 	}
 	
