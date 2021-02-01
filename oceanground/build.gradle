@@ -1,5 +1,5 @@
 plugins {
-	id "com.bmuschko.docker-java-application" version "3.0.6"
+	id "com.bmuschko.docker-java-application" version "3.0.11"
 }
 apply plugin: 'application'
 apply plugin: 'eclipse'
@@ -36,6 +36,7 @@ startScripts {
 }
 
 distTar {
+	delete 'build/docker/Dockerfile'
 	if (target == 'base') {
 		excludes = [ jar.archiveName ]
 	} else if (target == 'app') {
