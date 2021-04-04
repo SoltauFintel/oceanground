@@ -22,7 +22,7 @@
 		<gradle task="installDist"/>
 	</target>
 	<target name="eclipse">
-		<gradle task="eclipse"/>
+		<gradle task="cleanEclipse eclipse"/>
 	</target>
 	<target name="dep">
 		<gradle task="dep"/>
@@ -32,7 +32,7 @@
 		<attribute name="task"/>
 		<sequential>
 	        <exec executable="cmd" failonerror="true">
-	        	<arg line="/c gradlew.bat -g C:\jarcache\gradle -Ptarget=app @{task}"/>
+	        	<arg line="/c gradlew.bat -g D:\jarcache\gradle -Ptarget=app @{task}"/>
 	        </exec>
 		</sequential>
 	</macrodef>
@@ -40,7 +40,7 @@
 		<attribute name="task"/>
 		<sequential>
 	        <exec executable="cmd" failonerror="true">
-	        	<arg line="/c gradlew.bat -g C:\jarcache\gradle -Ptarget=base @{task}"/>
+	        	<arg line="/c gradlew.bat -g D:\jarcache\gradle -Ptarget=base @{task}"/>
 	        </exec>
 		</sequential>
 	</macrodef>
